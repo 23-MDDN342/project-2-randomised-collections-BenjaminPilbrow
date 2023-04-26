@@ -16,6 +16,8 @@ function setup () {
   let main_canvas = createCanvas(canvasWidth, canvasHeight);
   main_canvas.parent('canvasContainer');
 
+  angleMode(DEGREES)
+
   // create sliders
   slider1 = createSlider(0, 100, 50);
   slider2 = createSlider(0, 100, 50);
@@ -72,46 +74,58 @@ function draw () {
 
   let show_face_guide = faceGuideCheckbox.checked();
 
-  // use same size / y_pos for all faces
-  let face_size = canvasWidth / 5;
-  let face_scale = face_size / 10;
-  let face_y = height / 2;
-  let face_x = width / 2;
+  let hourParam = 6; // Set the hour parameter (0-11)
+let minuteParam = 45; // Set the minute parameter (0-59)
 
-  push();
-  translate(face_x, face_y);
-  scale(face_scale);
 
-  push();
-  if (mode == '1') {
-   // draw face using values mapped from 3 sliders
-   let tilt_value = map(s1, 0, 100, -90, 90);
-   let mouth_value = map(s2, 0, 100, 0.5, 10);
-   let eye_value = int(map(s3, 0, 100, 1, 3));
-   orangeAlienFace(tilt_value, eye_value, mouth_value);
+
+  // Set clock face parameters
+  let clockSize = 200;
+  let clockX = width / 2;
+  let clockY = height / 2;
+  let clockColor = color(255);
+  let shadowColor = color(0, 50);
+  let shadowOffset = 5;
+  let notchColor = color(0);
+  let notchSize = 10;
+
+  // Draw clock shadow
+  noStroke()
+  fill(shadowColor);
+  ellipse(clockX + shadowOffset, clockY + shadowOffset, clockSize);
+
+  // Draw clock face
+  fill(clockColor);
+  ellipse(clockX, clockY, clockSize);
+
+  // Draw hour notches
+  strokeWeight(4);
+  stroke(notchColor);
+  noFill();
+  for (let i = 0; i < 12; i++) {
+    let angle = i * 30 - 90; // 30 degrees per hour
+    let x1 = clockX + cos(angle) * (clockSize / 2 - notchSize);
+    let y1 = clockY + sin(angle) * (clockSize / 2 - notchSize);
+    let x2 = clockX + cos(angle) * (clockSize / 2);
+    let y2 = clockY + sin(angle) * (clockSize / 2);
+    line(x1, y1, x2, y2);
   }
 
-  if (mode == '2') {
-     // let slider value 1 indicate thinness
-     blockyFace(s1);
-  }
-  if (mode == '3') {
-    simplePurpleFace();
-  }
+  // Draw hour hand
+  let hourSize = clockSize / 2;
+  let hourAngle = map(hourParam % 12, 0, 12, 0, 360);
+  strokeWeight(5);
+  stroke(0);
+  line(clockX, clockY, clockX + cos(hourAngle - 90) * hourSize, clockY + sin(hourAngle - 90) * hourSize);
 
-  pop();
+  // Draw minute hand
+  let minuteSize = clockSize / 2.5;
+  let minuteAngle = map(minuteParam, 0, 60, 0, 360);
+  strokeWeight(3);
+  stroke(0);
+  line(clockX, clockY, clockX + cos(minuteAngle - 90) * minuteSize, clockY + sin(minuteAngle - 90) * minuteSize);
 
-  if(show_face_guide) {
-    strokeWeight(0.1);
-    rectMode(CORNER); 
-    noFill()
-    stroke(0, 0, 255);
-    rect(-10, -10, 20, 20);
-    line(  0, -11,  0, -10);
-    line(  0,  10,  0, 11);
-    line(-11,   0,-10,  0);
-    line( 11,   0, 10,  0);
-  }
+
 
   pop();
 }
