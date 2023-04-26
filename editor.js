@@ -19,8 +19,8 @@ function setup () {
   angleMode(DEGREES)
 
   // create sliders
-  slider1 = createSlider(0, 100, 50);
-  slider2 = createSlider(0, 100, 50);
+  slider1 = createSlider(0, 11, 0);
+  slider2 = createSlider(0, 59, 0);
   slider3 = createSlider(0, 100, 50);
   slider4 = createSlider(0, 100, 50);
   slider5 = createSlider(0, 100, 50);
@@ -55,14 +55,15 @@ function setup () {
 
 
 function draw () {
+
   strokeWeight(0.2);
 
   let mode = faceSelector.value();
 
   background(bg_color);
 
-  let s1 = slider1.value();
-  let s2 = slider2.value();
+  let hourParam = slider1.value(); // Set the hour parameter (0-11)
+  let minuteParam = slider2.value(); // Set the minute parameter (0-59)
   let s3 = slider3.value();
   let s4 = slider4.value();
   let s5 = slider5.value();
@@ -74,8 +75,7 @@ function draw () {
 
   let show_face_guide = faceGuideCheckbox.checked();
 
-  let hourParam = 6; // Set the hour parameter (0-11)
-let minuteParam = 45; // Set the minute parameter (0-59)
+
 
 
 
@@ -88,6 +88,15 @@ let minuteParam = 45; // Set the minute parameter (0-59)
   let shadowOffset = 5;
   let notchColor = color(0);
   let notchSize = 10;
+  let handColor = 0;
+
+
+  if (mode == '2') {
+    clockColor = 0;
+    notchColor = 255;
+    handColor = 255;
+ }
+
 
   // Draw clock shadow
   noStroke()
@@ -115,19 +124,36 @@ let minuteParam = 45; // Set the minute parameter (0-59)
   let hourSize = clockSize / 2;
   let hourAngle = map(hourParam % 12, 0, 12, 0, 360);
   strokeWeight(5);
-  stroke(0);
+  stroke(handColor);
   line(clockX, clockY, clockX + cos(hourAngle - 90) * hourSize, clockY + sin(hourAngle - 90) * hourSize);
 
   // Draw minute hand
   let minuteSize = clockSize / 2.5;
   let minuteAngle = map(minuteParam, 0, 60, 0, 360);
   strokeWeight(3);
-  stroke(0);
+  stroke(handColor);
   line(clockX, clockY, clockX + cos(minuteAngle - 90) * minuteSize, clockY + sin(minuteAngle - 90) * minuteSize);
 
 
+  
+//  if (mode == '3') {
+//    simplePurpleFace();
+//  }
 
-  pop();
+
+if(show_face_guide) {
+  strokeWeight(0.1);
+  rectMode(CORNER); 
+  noFill()
+  stroke(0, 0, 255);
+  rect(-10, -10, 20, 20);
+  line(  0, -11,  0, -10);
+  line(  0,  10,  0, 11);
+  line(-11,   0,-10,  0);
+  line( 11,   0, 10,  0);
+}
+
+
 }
 
 function keyTyped() {
