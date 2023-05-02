@@ -17,7 +17,7 @@ function setup () {
   main_canvas.parent('canvasContainer');
 
   curRandomSeed = int(random(0, 1000));
-
+ 
   // rotation in degrees
   angleMode(DEGREES);
 }
@@ -69,7 +69,7 @@ function draw () {
         translate(x, y);
         scale(w/25, h/25);
         
-        orangeAlienFace(tilt_value, eye_value, mouth_value);
+        clockFace1(tilt_value, eye_value, mouth_value);
         pop();
       
     }

@@ -7,6 +7,7 @@ const canvasHeight = 500;
 const bg_color = [71, 222, 219];
 let slider1, slider2, slider3, slider4, slider5;
 let slider6, slider7, slider8, slider9, slider10;
+let slider11, slider12, slider13, slider14, slider15;
 let faceSelector;
 let faceGuideCheckbox;
 
@@ -21,14 +22,15 @@ function setup () {
   // create sliders
   slider1 = createSlider(0, 11, 0); // hour hand
   slider2 = createSlider(0, 59, 0); // minute hand
-  slider3 = createSlider(0, 100, 50);
-  slider4 = createSlider(0, 100, 50);
-  slider5 = createSlider(0, 50, 25); // eye corner 1
-  slider6 = createSlider(0, 50, 25); // eye corner 2
-  slider7 = createSlider(0, 100, 50); // clock corner 1
-  slider8 = createSlider(0, 100, 50); // clock corner 2
-  slider9 = createSlider(0, 100, 50); // clock corner 3
-  slider10 = createSlider(0, 100, 50); // clock corner 4
+  slider3 = createSlider(10, 50, 25); // eyeball size
+  slider4 = createSlider(0, 15, 10); // eyeYoffset
+  slider5 = createSlider(-10, 10, 10); // eyeYoffset
+  slider6 = createSlider(10, 50, 25); // eye corner 1
+  slider7 = createSlider(10, 50, 25); // eye corner 2
+  slider8 = createSlider(10, 100, 50); // clock corner 1
+  slider9 = createSlider(10, 100, 50); // clock corner 2
+  slider10 = createSlider(10, 100, 50); // clock corner 3
+  slider11 = createSlider(10, 100, 50); // clock corner 4
 
   slider1.parent('slider1Container');
   slider2.parent('slider2Container');
@@ -40,6 +42,7 @@ function setup () {
   slider8.parent('slider8Container');
   slider9.parent('slider9Container');
   slider10.parent('slider10Container');
+  slider11.parent('slider11Container'); 
 
   faceGuideCheckbox = createCheckbox('', false);
   faceGuideCheckbox.parent('checkbox1Container');
@@ -65,18 +68,19 @@ function draw () {
 
   let hourParam = slider1.value(); // Set the hour parameter (0-11)
   let minuteParam = slider2.value(); // Set the minute parameter (0-59)
-  let s3 = slider3.value();
-  let s4 = slider4.value();
-  let eyeCorner1 = slider5.value(); // Eye roundness 1
-  let eyeCorner2 = slider6.value(); // Eye roundness 2
-  let clockCorner1 = slider7.value(); // Clock roundness 1
-  let clockCorner2 = slider8.value(); // Clock roundness 2
-  let clockCorner3 = slider9.value(); // Clock roundness 3
-  let clockCorner4 = slider10.value(); // Clock roundness 4
+  let eyeballSize = slider3.value(); // Eyeball Size
+  let eyeYOffset = slider4.value(); // eyeYOffset
+  let pupilOffset = slider5.value(); // eyeYOffset
+  let eyeCorner1 = slider6.value(); // Eye roundness 1
+  let eyeCorner2 = slider7.value(); // Eye roundness 2
+  let clockCorner1 = slider8.value(); // Clock roundness 1
+  let clockCorner2 = slider9.value(); // Clock roundness 2
+  let clockCorner3 = slider10.value(); // Clock roundness 3
+  let clockCorner4 = slider11.value(); // Clock roundness 4
 
   let show_face_guide = faceGuideCheckbox.checked();
 
-
+  
 
 
   // Set clock face parameters
@@ -89,17 +93,10 @@ function draw () {
   let notchColor = color(0);
   let notchSize = 10;
   let handColor = 0;
-
-
-
-
-
   let eyeX = clockX - 50;
   let eyeY = clockY - 90;
   let eyeSize = 70;
-
-
-  let eyeOffset = 100;
+  let eyeRightOffset = 100;
 
 
   if (mode == '2') {
@@ -111,32 +108,38 @@ function draw () {
 
 
 
+
+
   // Left Eye Base
   noStroke()
   fill(clockColor)
-  rect(eyeX, eyeY, eyeSize, eyeSize + 30, eyeCorner1, eyeCorner2)
+  rect(eyeX, eyeY + eyeYOffset, eyeSize, eyeSize + 40, eyeCorner1, eyeCorner2)
 
   // Left Eye Ball
   fill(notchColor);
-  ellipse(eyeX, eyeY -10, 50, 50)
+  ellipse(eyeX, eyeY -10, eyeballSize, eyeballSize)
 
   // Left Eye Pupil
   fill(clockColor)
-  ellipse(eyeX -20, eyeY -10, 30, 40)
+  ellipse(eyeX + pupilOffset, eyeY -10, eyeballSize/2 + 8, eyeballSize/1.5)
+
+
+
+
 
 
   // Right Eye Base
   noStroke()
   fill(clockColor)
-  rect(eyeX + eyeOffset, eyeY, eyeSize, eyeSize + 30, eyeCorner1, eyeCorner2)
+  rect(eyeX + eyeRightOffset, eyeY + eyeYOffset, eyeSize, eyeSize + 40, eyeCorner1, eyeCorner2)
 
   // Right Eye Ball
   fill(notchColor);
-  ellipse(eyeX + eyeOffset, eyeY -10, 50, 50)
+  ellipse(eyeX + eyeRightOffset, eyeY -10, eyeballSize, eyeballSize)
 
   // Right Eye Pupil
   fill(clockColor)
-  ellipse(eyeX -20 + eyeOffset, eyeY -10, 30, 40)
+  ellipse(eyeX + pupilOffset + eyeRightOffset, eyeY -10, eyeballSize/2 + 8, eyeballSize/1.5)
 
 
 
@@ -177,9 +180,7 @@ function draw () {
 
 
   
-//  if (mode == '3') {
-//    simplePurpleFace();
-//  }
+
 
 
 if(show_face_guide) {
