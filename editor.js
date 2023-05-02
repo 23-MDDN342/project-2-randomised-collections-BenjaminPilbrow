@@ -19,16 +19,16 @@ function setup () {
   angleMode(DEGREES)
 
   // create sliders
-  slider1 = createSlider(0, 11, 0);
-  slider2 = createSlider(0, 59, 0);
+  slider1 = createSlider(0, 11, 0); // hour hand
+  slider2 = createSlider(0, 59, 0); // minute hand
   slider3 = createSlider(0, 100, 50);
   slider4 = createSlider(0, 100, 50);
-  slider5 = createSlider(0, 100, 50);
-  slider6 = createSlider(0, 100, 50);
-  slider7 = createSlider(0, 100, 50);
-  slider8 = createSlider(0, 100, 50);
-  slider9 = createSlider(0, 100, 50);
-  slider10 = createSlider(0, 100, 50);
+  slider5 = createSlider(0, 50, 25); // eye corner 1
+  slider6 = createSlider(0, 50, 25); // eye corner 2
+  slider7 = createSlider(0, 100, 50); // clock corner 1
+  slider8 = createSlider(0, 100, 50); // clock corner 2
+  slider9 = createSlider(0, 100, 50); // clock corner 3
+  slider10 = createSlider(0, 100, 50); // clock corner 4
 
   slider1.parent('slider1Container');
   slider2.parent('slider2Container');
@@ -61,20 +61,20 @@ function draw () {
   let mode = faceSelector.value();
 
   background(bg_color);
+  rectMode(CENTER)
 
   let hourParam = slider1.value(); // Set the hour parameter (0-11)
   let minuteParam = slider2.value(); // Set the minute parameter (0-59)
   let s3 = slider3.value();
   let s4 = slider4.value();
-  let s5 = slider5.value();
-  let s6 = slider6.value();
-  let s7 = slider7.value();
-  let s8 = slider8.value();
-  let s9 = slider9.value();
-  let s10 = slider10.value();
+  let eyeCorner1 = slider5.value(); // Eye roundness 1
+  let eyeCorner2 = slider6.value(); // Eye roundness 2
+  let clockCorner1 = slider7.value(); // Clock roundness 1
+  let clockCorner2 = slider8.value(); // Clock roundness 2
+  let clockCorner3 = slider9.value(); // Clock roundness 3
+  let clockCorner4 = slider10.value(); // Clock roundness 4
 
   let show_face_guide = faceGuideCheckbox.checked();
-
 
 
 
@@ -91,6 +91,17 @@ function draw () {
   let handColor = 0;
 
 
+
+
+
+  let eyeX = clockX - 50;
+  let eyeY = clockY - 90;
+  let eyeSize = 70;
+
+
+  let eyeOffset = 100;
+
+
   if (mode == '2') {
     clockColor = 0;
     notchColor = 255;
@@ -98,14 +109,44 @@ function draw () {
  }
 
 
-  // Draw clock shadow
+
+
+  // Left Eye Base
   noStroke()
+  fill(clockColor)
+  rect(eyeX, eyeY, eyeSize, eyeSize + 30, eyeCorner1, eyeCorner2)
+
+  // Left Eye Ball
+  fill(notchColor);
+  ellipse(eyeX, eyeY -10, 50, 50)
+
+  // Left Eye Pupil
+  fill(clockColor)
+  ellipse(eyeX -20, eyeY -10, 30, 40)
+
+
+  // Right Eye Base
+  noStroke()
+  fill(clockColor)
+  rect(eyeX + eyeOffset, eyeY, eyeSize, eyeSize + 30, eyeCorner1, eyeCorner2)
+
+  // Right Eye Ball
+  fill(notchColor);
+  ellipse(eyeX + eyeOffset, eyeY -10, 50, 50)
+
+  // Right Eye Pupil
+  fill(clockColor)
+  ellipse(eyeX -20 + eyeOffset, eyeY -10, 30, 40)
+
+
+
+  // Draw clock shadow
   fill(shadowColor);
-  ellipse(clockX + shadowOffset, clockY + shadowOffset, clockSize);
+  rect(clockX + shadowOffset, clockY + shadowOffset, clockSize, clockSize, clockCorner1, clockCorner2, clockCorner3, clockCorner4);
 
   // Draw clock face
   fill(clockColor);
-  ellipse(clockX, clockY, clockSize);
+  rect(clockX, clockY, clockSize, clockSize, clockCorner1, clockCorner2, clockCorner3, clockCorner4);
 
   // Draw hour notches
   strokeWeight(4);
@@ -130,7 +171,7 @@ function draw () {
   // Draw minute hand
   let minuteSize = clockSize / 2.5;
   let minuteAngle = map(minuteParam, 0, 60, 0, 360);
-  strokeWeight(3);
+  strokeWeight(5);
   stroke(handColor);
   line(clockX, clockY, clockX + cos(minuteAngle - 90) * minuteSize, clockY + sin(minuteAngle - 90) * minuteSize);
 
