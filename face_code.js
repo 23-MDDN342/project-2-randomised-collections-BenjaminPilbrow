@@ -7,75 +7,92 @@
  * These functions are used by your final arrangement of faces as well as the face editor.
  */
 
-
-/*
- * tilt_value is in degrees
- * eye_value is an integer number of eyes: either 0, 1, 2, or 3
- * mouth_value is how open the mouth is and should generally range from 0.5 to 10
- */
-function orangeAlienFace(tilt_value, eye_value, mouth_value) {
-  const bg_color3 = [71, 222, 219];
-  const fg_color3 = [255, 93, 35];
-
-  let headSize = 20
-  let eyeSize = 5;
-  let centerX = 0;
-  let Iy = -4
-  let distactBetweenEyes = 5
-  let MouthDrop = 7
+function clockFace1(hourParam, minuteParam, eyeballSize, eyeYOffset, pupilOffset, eyeCorner1, eyeCorner2, clockCorner1, clockCorner2, clockCorner3, clockCorner4, faceMode) {
   
-  // rotation in degrees
-  angleMode(DEGREES);
-  rotate(tilt_value);
+  // Clock face parameters
+  let clockSize = 200; // base clock size
+  let clockX = width / 2; // clock X location
+  let clockY = height / 2; // clock Y location
+  let clockColor = color(255); // clock colour
+  let shadowColor = color(0, 255); // clock shadow colour
+  let shadowOffset = 5; // shadow offset
+  let notchColor = color(0); // notch colour
+  let notchSize = 10; // notch size
+  let handColor = 0; // hand colour
+  let eyeX = clockX - 50; // eye X location (reletave to clockX)
+  let eyeY = clockY - 90; // eye Y location (reletave to clockY)
+  let eyeSize = 70; // eye size
+  let eyeRightOffset = 100; // second eye X offset
 
- // head
-  noStroke();
-  fill(fg_color3);
-  ellipse(centerX, 0, headSize, headSize);
-
-  // 2 traditonal eyes
-  if (eye_value === 1 || eye_value == 3) {
-    fill(bg_color3);
-    ellipse(centerX, Iy, eyeSize-1,eyeSize);
-   
+  // Handle if clock should invert colour
+  if (faceMode == '2') {
+    clockColor = 0;
+    shadowColor = 255, 0
+    notchColor = 255;
+    handColor = 255;
   }
-// middle eye
-  if (eye_value >= 2) {
-    fill(bg_color3);
-    ellipse(centerX - distactBetweenEyes, Iy, eyeSize);
-    ellipse(centerX + distactBetweenEyes, Iy, eyeSize );
+
+  // Left Eye Base
+  noStroke()
+  fill(clockColor)
+  rect(eyeX, eyeY + eyeYOffset, eyeSize, eyeSize + 40, eyeCorner1, eyeCorner2)
+
+  // Left Eye Ball
+  fill(notchColor);
+  ellipse(eyeX, eyeY -10, eyeballSize, eyeballSize)
+
+  // Left Eye Pupil
+  fill(clockColor)
+  ellipse(eyeX + pupilOffset, eyeY -10, eyeballSize/2 + 8, eyeballSize/1.5)
+
+  // Right Eye Base
+  noStroke()
+  fill(clockColor)
+  rect(eyeX + eyeRightOffset, eyeY + eyeYOffset, eyeSize, eyeSize + 40, eyeCorner1, eyeCorner2)
+
+  // Right Eye Ball
+  fill(notchColor);
+  ellipse(eyeX + eyeRightOffset, eyeY -10, eyeballSize, eyeballSize)
+
+  // Right Eye Pupil
+  fill(clockColor)
+  ellipse(eyeX + pupilOffset + eyeRightOffset, eyeY -10, eyeballSize/2 + 8, eyeballSize/1.5)
+
+  // Draw clock shadow
+  fill(shadowColor);
+  rect(clockX + shadowOffset, clockY + shadowOffset, clockSize, clockSize, clockCorner1, clockCorner2, clockCorner3, clockCorner4);
+
+  // Draw clock face
+  fill(clockColor);
+  rect(clockX, clockY, clockSize, clockSize, clockCorner1, clockCorner2, clockCorner3, clockCorner4);
+
+  // Draw hour notches
+  strokeWeight(4);
+  stroke(notchColor);
+  noFill();
+  for (let i = 0; i < 12; i++) {
+    let angle = i * 30 - 90; // 30 degrees per hour
+    let x1 = clockX + cos(angle) * (clockSize / 2 - notchSize);
+    let y1 = clockY + sin(angle) * (clockSize / 2 - notchSize);
+    let x2 = clockX + cos(angle) * (clockSize / 2);
+    let y2 = clockY + sin(angle) * (clockSize / 2);
+    line(x1, y1, x2, y2);
   }
 
-  // mouth
-  fill(bg_color3);
-  ellipse(centerX, Iy + MouthDrop, distactBetweenEyes, mouth_value);
+  // Draw hour hand
+  let hourSize = clockSize / 2;
+  let hourAngle = map(hourParam % 12, 0, 12, 0, 360);
+  strokeWeight(5);
+  stroke(handColor);
+  line(clockX, clockY, clockX + cos(hourAngle - 90) * hourSize, clockY + sin(hourAngle - 90) * hourSize);
+
+  // Draw minute hand
+  let minuteSize = clockSize / 2.5;
+  let minuteAngle = map(minuteParam, 0, 60, 0, 360);
+  strokeWeight(5);
+  stroke(handColor);
+  line(clockX, clockY, clockX + cos(minuteAngle - 90) * minuteSize, clockY + sin(minuteAngle - 90) * minuteSize);
+
 }
 
 
-function simplePurpleFace() {
-  fill(234, 122, 244);
-  noStroke();
-  // head
-  ellipse(0, 0, 20);
-  // eyes
-  fill(255, 217, 114);
-  ellipse(-3, -3, 3);
-  ellipse( 3, -3, 3);
-}
-
-/*
- * thinness_value ranges from 0-100 and indicates how thin the face is
- */
-function blockyFace(thinness_value) {
-  // head
-  noStroke();
-  fill(134, 19, 136);
-  let head_width = map(thinness_value, 0, 100, 8, 20);
-  rect(-head_width/2, -9, head_width, 18);
- 
-
-  // eyes
-  fill(234, 122, 244);
-  ellipse(-2, -4, 1);
-  ellipse( 2, -4, 1);
-}

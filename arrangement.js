@@ -10,14 +10,14 @@ let lastSwapTime = 0;
 const millisPerSwap = 3000;
 
 // global variables for colors
-const bg_color1 = [71, 222, 219];
+const bg_color1 = [20];
 function setup () {
   // create the drawing canvas, save the canvas element
   let main_canvas = createCanvas(canvasWidth, canvasHeight);
   main_canvas.parent('canvasContainer');
 
   curRandomSeed = int(random(0, 1000));
-
+ 
   // rotation in degrees
   angleMode(DEGREES);
 }
@@ -26,8 +26,6 @@ function changeRandomSeed() {
   curRandomSeed = curRandomSeed + 1;
   lastSwapTime = millis();
 }
-
-
 
 function mouseClicked() {
   changeRandomSeed();
@@ -45,35 +43,48 @@ function draw () {
   background(bg_color1);
   noStroke();
 
-  // draw a 7x4 grid of faces
+  // background lines
+  for(let i=0; i<4; i++) {
+    fill(color(0, 50))
+    rect(0+i*275, 0, 140, 500)
+    }
+
+  // draw a 7x4 grid of clock faces
   let w = canvasWidth / 7;
   let h = canvasHeight / 4;
+
   for(let i=0; i<4; i++) {
     for(let j=0; j<7; j++) {
       let y = h/2 + h*i;
       let x = w/2 + w*j;
-     
-        // center face
-        let eye_value = int(random(2,4));
-        let tilt_value = random(-45, 45);
-        let mouth_value = random(3,4);
-        let is_cyclops = random(0, 100);
-
-        if(is_cyclops < 10) {
-          eye_value = 1;
-          tilt_value = random(-5, 5);
-          mouth_value = random(0, 1.7);
-        }
+  
+        let hourParam = random(0,11); // hour hand
+        let minuteParam = random(0,59); // minute hand
+        let eyeballSize = random(20,50); // eyeball size
+        let eyeYOffset = random(0,10);// eyeY Offset
+        let pupilOffset = random(-10,10); // pupil Offset
+        let eyeCorner1 = random(10,50); // eye corner 1
+        let eyeCorner2 = random(10,50);// eye corner 2
+        let clockCorner1 = random(10,100);// clock corner 1
+        let clockCorner2 = random(10,100);// clock corner 2
+        let clockCorner3 = random(10,100); // clock corner 3
+        let clockCorner4 = random(10,100);// clock corner 4
+        let faceMode = int(random(1, 3)); // determine which face should be displayed
 
         push();
-        translate(x, y);
-        scale(w/25, h/25);
-        
-        orangeAlienFace(tilt_value, eye_value, mouth_value);
+
+        rectMode(CENTER)
+        translate(x -240, y - 120);
+        scale(0.5)
+
+        // call face function
+        clockFace1(hourParam, minuteParam, eyeballSize, eyeYOffset, pupilOffset, eyeCorner1, eyeCorner2, clockCorner1, clockCorner2, clockCorner3, clockCorner4, faceMode);
+       
         pop();
       
     }
   }
+
 }
 
 function keyTyped() {
