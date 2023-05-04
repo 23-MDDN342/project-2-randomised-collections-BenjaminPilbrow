@@ -55,8 +55,8 @@ function draw () {
   
         let hourParam = random(0,11); // Set the hour parameter (0-11)
         let minuteParam = random(0,59); // Set the minute parameter (0-59)
-        let eyeballSize = random(10,50); // Eyeball Size
-        let eyeYOffset = random(0,15);// eyeYOffset
+        let eyeballSize = random(20,50); // Eyeball Size
+        let eyeYOffset = random(0,10);// eyeYOffset
         let pupilOffset = random(-10,10); // eyeYOffset
         let eyeCorner1 = random(10,50); // Eye roundness 1
         let eyeCorner2 = random(10,50);// Eye roundness 2
@@ -64,13 +64,19 @@ function draw () {
         let clockCorner2 = random(10,100);// Clock roundness 2
         let clockCorner3 = random(10,100); // Clock roundness 3
         let clockCorner4 = random(10,100);// Clock roundness 4
+
+        let faceMode = int(random(1, 3));
        
 
         push();
-        //translate(x, y);
-        //scale(w/25, h/25);
+        rectMode(CENTER)
+
+        translate(x -250, y - 120);
+
+        scale(0.5)
+
+        clockFace1(hourParam, minuteParam, eyeballSize, eyeYOffset, pupilOffset, eyeCorner1, eyeCorner2, clockCorner1, clockCorner2, clockCorner3, clockCorner4, faceMode);
         
-        clockFace1(hourParam, minuteParam, eyeballSize, eyeYOffset, pupilOffset, eyeCorner1, eyeCorner2, clockCorner1, clockCorner2, clockCorner3, clockCorner4);
         pop();
       
     }

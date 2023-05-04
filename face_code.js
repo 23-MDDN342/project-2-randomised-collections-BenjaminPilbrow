@@ -13,7 +13,7 @@
  * eye_value is an integer number of eyes: either 0, 1, 2, or 3
  * mouth_value is how open the mouth is and should generally range from 0.5 to 10
  */
-function clockFace1(hourParam, minuteParam, eyeballSize, eyeYOffset, pupilOffset, eyeCorner1, eyeCorner2, clockCorner1, clockCorner2, clockCorner3, clockCorner4) {
+function clockFace1(hourParam, minuteParam, eyeballSize, eyeYOffset, pupilOffset, eyeCorner1, eyeCorner2, clockCorner1, clockCorner2, clockCorner3, clockCorner4, faceMode) {
   
 // Set clock face parameters
 let clockSize = 200;
@@ -30,32 +30,28 @@ let eyeY = clockY - 90;
 let eyeSize = 70;
 let eyeRightOffset = 100;
 
-let hourParam = 0 // Set the hour parameter (0-11)
-let minuteParam = 0 // Set the minute parameter (0-59)
-let eyeballSize = 10 // Eyeball Size
-let eyeYOffset =  10// eyeYOffset
-let pupilOffset = 10 // eyeYOffset
-let eyeCorner1 = 10 // Eye roundness 1
-let eyeCorner2 =  10// Eye roundness 2
-let clockCorner1 = 10// Clock roundness 1
-let clockCorner2 = 10// Clock roundness 2
-let clockCorner3 = 10 // Clock roundness 3
-let clockCorner4 =  10// Clock roundness 4
+// let hourParam = 0 // Set the hour parameter (0-11)
+// let minuteParam = 0 // Set the minute parameter (0-59)
+// let eyeballSize = 10 // Eyeball Size
+// let eyeYOffset =  10// eyeYOffset
+// let pupilOffset = 10 // eyeYOffset
+// let eyeCorner1 = 10 // Eye roundness 1
+// let eyeCorner2 =  10// Eye roundness 2
+// let clockCorner1 = 10// Clock roundness 1
+// let clockCorner2 = 10// Clock roundness 2
+// let clockCorner3 = 10 // Clock roundness 3
+// let clockCorner4 =  10// Clock roundness 4
 
 
 
 
 
 
-
-
-
-
-// if (mode == '2') {
-//   clockColor = 0;
-//   notchColor = 255;
-//   handColor = 255;
-// }
+if (faceMode == '2') {
+  clockColor = 0;
+  notchColor = 255;
+  handColor = 255;
+}
 
 
 
