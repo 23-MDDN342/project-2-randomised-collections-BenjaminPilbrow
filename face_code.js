@@ -13,7 +13,7 @@
  * eye_value is an integer number of eyes: either 0, 1, 2, or 3
  * mouth_value is how open the mouth is and should generally range from 0.5 to 10
  */
-function clockFace1(tilt_value, eye_value, mouth_value) {
+function clockFace1(hourParam, minuteParam, eyeballSize, eyeYOffset, pupilOffset, eyeCorner1, eyeCorner2, clockCorner1, clockCorner2, clockCorner3, clockCorner4) {
   
 // Set clock face parameters
 let clockSize = 200;
@@ -30,12 +30,32 @@ let eyeY = clockY - 90;
 let eyeSize = 70;
 let eyeRightOffset = 100;
 
+let hourParam = 0 // Set the hour parameter (0-11)
+let minuteParam = 0 // Set the minute parameter (0-59)
+let eyeballSize = 10 // Eyeball Size
+let eyeYOffset =  10// eyeYOffset
+let pupilOffset = 10 // eyeYOffset
+let eyeCorner1 = 10 // Eye roundness 1
+let eyeCorner2 =  10// Eye roundness 2
+let clockCorner1 = 10// Clock roundness 1
+let clockCorner2 = 10// Clock roundness 2
+let clockCorner3 = 10 // Clock roundness 3
+let clockCorner4 =  10// Clock roundness 4
 
-if (mode == '2') {
-  clockColor = 0;
-  notchColor = 255;
-  handColor = 255;
-}
+
+
+
+
+
+
+
+
+
+// if (mode == '2') {
+//   clockColor = 0;
+//   notchColor = 255;
+//   handColor = 255;
+// }
 
 
 
@@ -118,30 +138,3 @@ line(clockX, clockY, clockX + cos(minuteAngle - 90) * minuteSize, clockY + sin(m
 }
 
 
-function simplePurpleFace() {
-  fill(234, 122, 244);
-  noStroke();
-  // head
-  ellipse(0, 0, 20);
-  // eyes
-  fill(255, 217, 114);
-  ellipse(-3, -3, 3);
-  ellipse( 3, -3, 3);
-}
-
-/*
- * thinness_value ranges from 0-100 and indicates how thin the face is
- */
-function blockyFace(thinness_value) {
-  // head
-  noStroke();
-  fill(134, 19, 136);
-  let head_width = map(thinness_value, 0, 100, 8, 20);
-  rect(-head_width/2, -9, head_width, 18);
- 
-
-  // eyes
-  fill(234, 122, 244);
-  ellipse(-2, -4, 1);
-  ellipse( 2, -4, 1);
-}

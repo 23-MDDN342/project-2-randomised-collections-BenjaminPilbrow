@@ -9,13 +9,15 @@ let curRandomSeed = 0;
 let lastSwapTime = 0;
 const millisPerSwap = 3000;
 
+// global variables for colors
+const bg_color1 = [71, 222, 219];
 function setup () {
   // create the drawing canvas, save the canvas element
   let main_canvas = createCanvas(canvasWidth, canvasHeight);
   main_canvas.parent('canvasContainer');
 
   curRandomSeed = int(random(0, 1000));
-
+ 
   // rotation in degrees
   angleMode(DEGREES);
 }
@@ -25,8 +27,7 @@ function changeRandomSeed() {
   lastSwapTime = millis();
 }
 
-// global variables for colors
-const bg_color1 = [71, 222, 219]
+
 
 function mouseClicked() {
   changeRandomSeed();
@@ -51,37 +52,28 @@ function draw () {
     for(let j=0; j<7; j++) {
       let y = h/2 + h*i;
       let x = w/2 + w*j;
-      if (i == 0) {
-        // center face
-        let eye_value = 2;
-        let tilt_value = random(-45, 45);
-        let mouth_value = random(1, 3);
-        let is_cyclops = random(0, 100);
-        if(is_cyclops < 10) {
-          eye_value = 1;
-          tilt_value = random(-5, 5);
-          mouth_value = random(5, 10);
-        }
+  
+        let hourParam = random(0,11); // Set the hour parameter (0-11)
+        let minuteParam = random(0,59); // Set the minute parameter (0-59)
+        let eyeballSize = random(10,50); // Eyeball Size
+        let eyeYOffset = random(0,15);// eyeYOffset
+        let pupilOffset = random(-10,10); // eyeYOffset
+        let eyeCorner1 = random(10,50); // Eye roundness 1
+        let eyeCorner2 = random(10,50);// Eye roundness 2
+        let clockCorner1 = random(10,100);// Clock roundness 1
+        let clockCorner2 = random(10,100);// Clock roundness 2
+        let clockCorner3 = random(10,100); // Clock roundness 3
+        let clockCorner4 = random(10,100);// Clock roundness 4
+       
+
         push();
-        translate(x, y);
-        scale(w/25, h/25);
-        orangeAlienFace(tilt_value, eye_value, mouth_value);
+        //translate(x, y);
+        //scale(w/25, h/25);
+        
+        clockFace1(hourParam, minuteParam, eyeballSize, eyeYOffset, pupilOffset, eyeCorner1, eyeCorner2, clockCorner1, clockCorner2, clockCorner3, clockCorner4);
+        
         pop();
-      }
-      else if (i > 0) {
-        // all other faces
-        push();
-        translate(x, y);
-        scale(w/25, h/25);
-        if((i+j)%2 == 0) {
-          simplePurpleFace();
-        }
-        else {
-          thinness_value = random(0, 100);
-          blockyFace(thinness_value);
-        }
-        pop();
-      }
+      
     }
   }
 }

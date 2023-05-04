@@ -52,24 +52,25 @@ function draw () {
     for(let j=0; j<7; j++) {
       let y = h/2 + h*i;
       let x = w/2 + w*j;
-     
-        // center face
-        let eye_value = int(random(2,4));
-        let tilt_value = random(-45, 45);
-        let mouth_value = random(3,4);
-        let is_cyclops = random(0, 100);
-
-        if(is_cyclops < 10) {
-          eye_value = 1;
-          tilt_value = random(-5, 5);
-          mouth_value = random(0, 1.7);
-        }
+  
+        let hourParam = random(0,11); // Set the hour parameter (0-11)
+        let minuteParam = random(0,59); // Set the minute parameter (0-59)
+        let eyeballSize = random(10,50); // Eyeball Size
+        let eyeYOffset = random(0,15);// eyeYOffset
+        let pupilOffset = random(-10,10); // eyeYOffset
+        let eyeCorner1 = random(10,50); // Eye roundness 1
+        let eyeCorner2 = random(10,50);// Eye roundness 2
+        let clockCorner1 = random(10,100);// Clock roundness 1
+        let clockCorner2 = random(10,100);// Clock roundness 2
+        let clockCorner3 = random(10,100); // Clock roundness 3
+        let clockCorner4 = random(10,100);// Clock roundness 4
+       
 
         push();
-        translate(x, y);
-        scale(w/25, h/25);
+        //translate(x, y);
+        //scale(w/25, h/25);
         
-        clockFace1(tilt_value, eye_value, mouth_value);
+        clockFace1(hourParam, minuteParam, eyeballSize, eyeYOffset, pupilOffset, eyeCorner1, eyeCorner2, clockCorner1, clockCorner2, clockCorner3, clockCorner4);
         pop();
       
     }
