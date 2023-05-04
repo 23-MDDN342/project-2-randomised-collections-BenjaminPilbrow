@@ -4,7 +4,7 @@
 
 const canvasWidth = 960;
 const canvasHeight = 500;
-const bg_color = [71, 222, 219];
+const bg_color = [20];
 let slider1, slider2, slider3, slider4, slider5;
 let slider6, slider7, slider8, slider9, slider10;
 let slider11, slider12, slider13, slider14, slider15;
@@ -55,8 +55,6 @@ function setup () {
   faceSelector.parent('selector1Container');
 }
 
-
-
 function draw () {
 
   strokeWeight(0.2);
@@ -66,49 +64,42 @@ function draw () {
   background(bg_color);
   rectMode(CENTER)
 
-  let hourParam = slider1.value(); // Set the hour parameter (0-11)
-  let minuteParam = slider2.value(); // Set the minute parameter (0-59)
-  let eyeballSize = slider3.value(); // Eyeball Size
+  let hourParam = slider1.value(); // hour hand
+  let minuteParam = slider2.value(); // minute hand
+  let eyeballSize = slider3.value(); // eyeball Size
   let eyeYOffset = slider4.value(); // eyeYOffset
   let pupilOffset = slider5.value(); // eyeYOffset
-  let eyeCorner1 = slider6.value(); // Eye roundness 1
-  let eyeCorner2 = slider7.value(); // Eye roundness 2
-  let clockCorner1 = slider8.value(); // Clock roundness 1
-  let clockCorner2 = slider9.value(); // Clock roundness 2
-  let clockCorner3 = slider10.value(); // Clock roundness 3
-  let clockCorner4 = slider11.value(); // Clock roundness 4
+  let eyeCorner1 = slider6.value(); // eye roundness 1
+  let eyeCorner2 = slider7.value(); // eye roundness 2
+  let clockCorner1 = slider8.value(); // clock roundness 1
+  let clockCorner2 = slider9.value(); // clock roundness 2
+  let clockCorner3 = slider10.value(); // clock roundness 3
+  let clockCorner4 = slider11.value(); // clock roundness 4
 
   let show_face_guide = faceGuideCheckbox.checked();
 
-  
+  // Clock face parameters
+  let clockSize = 200; // base clock size
+  let clockX = width / 2; // clock X location
+  let clockY = height / 2; // clock Y location
+  let clockColor = color(255); // clock colour
+  let shadowColor = color(0, 255); // clock shadow colour
+  let shadowOffset = 5; // shadow offset
+  let notchColor = color(0); // notch colour
+  let notchSize = 10; // notch size
+  let handColor = 0; // hand colour
+  let eyeX = clockX - 50; // eye X location (reletave to clockX)
+  let eyeY = clockY - 90; // eye Y location (reletave to clockY)
+  let eyeSize = 70; // eye size
+  let eyeRightOffset = 100; // second eye X offset
 
-
-  // Set clock face parameters
-  let clockSize = 200;
-  let clockX = width / 2;
-  let clockY = height / 2;
-  let clockColor = color(255);
-  let shadowColor = color(0, 50);
-  let shadowOffset = 5;
-  let notchColor = color(0);
-  let notchSize = 10;
-  let handColor = 0;
-  let eyeX = clockX - 50;
-  let eyeY = clockY - 90;
-  let eyeSize = 70;
-  let eyeRightOffset = 100;
-
-
+  // Handle if clock should invert colour
   if (mode == '2') {
     clockColor = 0;
     notchColor = 255;
     handColor = 255;
+    shadowColor = 255, 0
  }
-
-
-
-
-
 
   // Left Eye Base
   noStroke()
@@ -123,11 +114,6 @@ function draw () {
   fill(clockColor)
   ellipse(eyeX + pupilOffset, eyeY -10, eyeballSize/2 + 8, eyeballSize/1.5)
 
-
-
-
-
-
   // Right Eye Base
   noStroke()
   fill(clockColor)
@@ -140,8 +126,6 @@ function draw () {
   // Right Eye Pupil
   fill(clockColor)
   ellipse(eyeX + pupilOffset + eyeRightOffset, eyeY -10, eyeballSize/2 + 8, eyeballSize/1.5)
-
-
 
   // Draw clock shadow
   fill(shadowColor);
@@ -178,11 +162,7 @@ function draw () {
   stroke(handColor);
   line(clockX, clockY, clockX + cos(minuteAngle - 90) * minuteSize, clockY + sin(minuteAngle - 90) * minuteSize);
 
-
-  
-
-
-
+// Face guide
 if(show_face_guide) {
   strokeWeight(0.1);
   rectMode(CORNER); 
@@ -194,7 +174,6 @@ if(show_face_guide) {
   line(-11,   0,-10,  0);
   line( 11,   0, 10,  0);
 }
-
 
 }
 
